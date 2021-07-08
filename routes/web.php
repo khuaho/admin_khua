@@ -48,6 +48,7 @@ Route::get('index', [
                 'as' => 'lienhe',
                 'uses' => 'PageController@getLienHe'
                 ]);
+                //Thêm vào giỏ hàng
                 Route::get('add-to-cart/{id}', [
                     'as' => 'themgiohang',
                     'uses' => 'PageController@getAddtoCart'
@@ -56,6 +57,16 @@ Route::get('index', [
                         'as' => 'xoagiohang',
                         'uses' => 'PageController@getDelItemCart'
                         ]);
+                        //Thêm vào add to list
+
+                        Route::post('addwishlist', [
+                            'as' => 'addwishlist',
+                            'uses' => 'PageController@getAddToWishList'
+                            ]);
+                            Route::get('del-wishlist/{id}', [
+                                'as' => 'xoayeuthich',
+                                'uses' => 'PageController@getDelItemWishlist'
+                                ]);
                         //Đặt hàng
                         Route::get('dat-hang', [
                             'as' => 'dathang',

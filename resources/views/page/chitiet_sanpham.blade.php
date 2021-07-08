@@ -56,6 +56,14 @@
                                 <option value="5">5</option>
                             </select>
                             <a class="add-to-cart" href="{{route('themgiohang',$sanpham->id)}}"><i class="fa fa-shopping-cart"></i></a>
+                            <form action="{{route('addwishlist')}}" method="post">
+                                <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+                                <input type="hidden" name="product_id" value="{{$sanpham->id}}"/>
+                                @if(Auth::check())
+                                    <input type="hidden" name="user_id" value="{{Auth::user()->id}}"/>
+                                @endif
+                                <button class="btn btn-warning" type="submit">Wishlist</i></button>
+                            </form>
                             <div class="clearfix"></div>
                         </div>
                     </div>
@@ -65,9 +73,8 @@
                 <div class="woocommerce-tabs">
                     <ul class="tabs">
                         <li><a href="#tab-description">Description</a></li>
-                        <li><a href="#tab-reviews">Reviews (0)</a></li>
+                        <li><a href="#tab-reviews">Reviews ({{$count_comment}})</a></li>
                     </ul>
-
                     <div class="panel" id="tab-description">
                         <p>{{$sanpham->description}}</p>
                     </div>
@@ -75,19 +82,14 @@
                         <div>
                             <h3>Các comment về sản phẩm {{$sanpham->name}}:</h3>
                         </div>
-                        @foreach ($comment as $com)
-                            <ul class="top-details menu-beta l-inline">
-                                <li>{{$com->user_id}}</li>
-                                {{-- @foreach ($user_comment as $user)
-                                 <li><img src="profile/{{$user->images}}" width="50px" height="50px"/></li>
-                                @endforeach
 
-                                <li></li> --}}
-                            </ul>
-                            <ul class="top-details menu-beta l-inline">
-                                <li>{{$com->content}}</li>
-                            </ul>
+                        @foreach ($users as $us)
+                        <ul class="top-details menu-beta l-inline">
+                            <li><img src="profile/{{$us->images}}" width="50px" height="50px"/></li>
+                            <li>{{$us->content}}</li>
+                        </ul>
                         @endforeach
+
                         <form action="{{route('comment')}}" method="post" >
                             @if(Session::has('thanhcong'))
                                 <div class="alert alert-success"><p>{{Session::get('thanhcong')}}</p></div>

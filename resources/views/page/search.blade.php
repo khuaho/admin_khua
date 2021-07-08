@@ -37,6 +37,14 @@
                                     <div class="single-item-caption">
                                         <a class="add-to-cart pull-left" href="{{route('themgiohang',$row['id'])}}"><i class="fa fa-shopping-cart"></i></a>
                                         <a class="beta-btn primary" href="{{route('chitietsanpham',$row['id'])}}">Details <i class="fa fa-chevron-right"></i></a>
+                                        <form action="{{route('addwishlist')}}" method="post">
+                                            <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+                                            <input type="hidden" name="product_id" value="{{$row->id}}"/>
+                                            @if(Auth::check())
+                                                <input type="hidden" name="user_id" value="{{Auth::user()->id}}"/>
+                                            @endif
+                                            <button class="btn btn-warning" type="submit">Wishlist</i></button>
+                                        </form>
                                         <div class="clearfix"></div>
                                     </div>
                                 </div>

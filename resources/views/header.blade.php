@@ -3,7 +3,7 @@
         <div class="container">
             <div class="pull-left auto-width-left">
                 <ul class="top-menu menu-beta l-inline">
-                    <li><a href=""><i class="fa fa-home"></i> 90-92 Lê Thị Riêng, Bến Thành, Quận 1</a></li>
+                    <li><a href=""><i class="fa fa-home"></i> 101B Lê Hữu Trác, Phước Mỹ, Sơn Trà, Đà Nẵng</a></li>
                     <li><a href=""><i class="fa fa-phone"></i> 0163 296 7751</a></li>
                 </ul>
             </div>
@@ -58,12 +58,6 @@
                                 </div>
                             </div>
                             @endforeach
-
-
-
-
-
-
                             <div class="cart-caption">
                                 <div class="cart-total text-right">Tổng tiền: <span class="cart-total-value">{{number_format(Session('cart')->totalPrice)}} đồng</span></div>
                                 <div class="clearfix"></div>
@@ -77,7 +71,35 @@
                     </div> <!-- .cart -->
                     @endif
                 </div>
+                <!--wishlist-->
+                <div class="beta-comp ">
+                    <div class="wishlist dropdown">
+                        <div class="beta-select " data-toggle="dropdown"><i class="fa fa-heart"></i> Sản phẩm yêu thích({{$count_wishlist}}) <i class="fa fa-chevron-down"></i></div>
+                        <div class="beta-dropdown wishlist-body dropdown-menu">
+
+                            @foreach($wishlist as $product)
+                            <div class="wishlist-item dropdown-item">
+
+                                <a class="wishlist-item-delete" href="{{route('xoayeuthich',$product->id)}}"><i class="fa fa-times"></i></a>
+                                <a class="add-to-cart pull-left" href="{{route('themgiohang',$product->id)}}"><i class="fa fa-shopping-cart"></i></a>
+								<a class="btn btn-warning" href="{{route('chitietsanpham',$product->id)}}">Details <i class="fa fa-chevron-right"></i></a>
+                                <div class="media">
+                                    <a class="pull-left" href="#"><img src="source/image/product/{{$product->image}}" alt=""></a>
+                                    <div class="media-body">
+                                        <span class="wishlist-item-title">{{$product->name}}</span>
+                                        <span class="wishlist-item-amount"><span> @if(($product->promotion_price)==0){{number_format($product->unit_price)}}đ @else {{number_format($product->promotion_price)}}đ @endif</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+
+                        </div>
+                    </div> <!-- .wishlist -->
+
+
+                </div>
             </div>
+
             <div class="clearfix"></div>
         </div> <!-- .container -->
     </div> <!-- .header-body -->

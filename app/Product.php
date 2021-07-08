@@ -19,4 +19,7 @@ class Product extends Model
     public function comments(){
         return $this->hasMany('App\Comment');
     }
+    public function wishlist(){
+        return $this->hasMany('App\Wishlist');
+    }
 }

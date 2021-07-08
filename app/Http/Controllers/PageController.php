@@ -14,6 +14,7 @@ use App\Bill;
 use App\BillDetail;
 use App\User;
 use App\Comment;
+use App\Wishlist;
 use Hash;
 use Auth;
 use PDF;
@@ -44,9 +45,12 @@ class PageController extends Controller
         $sp_tuongtu = Product::where('id_type',$sanpham->id_type)->paginate(3);
         $new_product = Product::where('new',1)->paginate(4);
         $comment = Comment::where('product_id', $req->id)->get();
-        // dd($comment->user_id);
-        // $user_comment = User::where('id', $comment->user_id)->first();
-        return view('page.chitiet_sanpham',compact('sanpham','sp_tuongtu','new_product','pro', 'comment'));
+        $count_comment = Comment::select(['comments.*'])
+                    ->where('product_id', '=', $req->id)
+                    ->count();
+        $users = DB::table('comments')->join('users', 'comments.user_id', '=', 'users.id')->join('products','comments.product_id','=','products.id')->where('products.id', '=', $req->id)->get();
+
+        return view('page.chitiet_sanpham',compact('sanpham','sp_tuongtu','new_product','pro', 'comment','users','count_comment'));
     }
     public function getGioiThieu(){
         return view('page.about');
@@ -55,7 +59,32 @@ class PageController extends Controller
     public function getLienHe(){
         return view('page.lienhe');
     }
+    public function getAddToWishList(Request $req){
+        // if(array_key_exists($id, $this->items)){
+        //     $giohang = $this->items[$id];
+        // }
+        $user_id='';
+            if(Auth::check()){
+                $user_id = Auth::user()->id;
+            }
 
+        $wishlist = DB::table('wishlist')->join('users', 'wishlist.user_id', '=', 'users.id')->join('products','wishlist.product_id','=','products.id')->where('users.id', '=', $user_id)->where('products.id','=',$req->product_id)->first();
+            if($wishlist){
+                return redirect()->back()->with('thanhcong','Sản phẩm này đã tồn tại trong wishlist của bạn');
+            }
+            else{
+                $wish = new Wishlist;
+                $wish->product_id = $req->product_id;
+                $wish->user_id = $req->user_id;
+                $wish->save();
+                return redirect()->back()->with('thanhcong','Thêm vào wishlist thành công');
+            }
+    }
+    public function getDelItemWishlist($id){
+        $wishlist = Wishlist::find($id);
+        $wishlist->delete();
+        return redirect()->back()->with('thanhcong','Sản phẩm yêu thích đã được xóa');
+    }
     public function getAddtoCart(Request $req, $id){
         $product = Product::find($id);
         $oldCart = Session('cart')?Session::get('cart'):null;
