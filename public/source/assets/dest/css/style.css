@@ -140,6 +140,49 @@ box-sizing:border-box
 small {
 font-size:11px
 }
+/*DASDBOARD*/
+@import "https://fonts.googleapis.com/css2?family=Prompt:wght@100;300;600&display=swap";
+/* body{background:#131217;color:#adbcdb;font-family:'Prompt',sans-serif} */
+.dashboardheader{border-bottom:1px solid #575f70;padding:10px;color:#575f70;margin-bottom:15px}
+.d-flex{display:flex;flex-wrap:wrap;text-align:center}
+.d-flex > div{margin:5px}
+.box{flex:0 0 calc(33.33% - 10px);background:#20242c;border-radius:10px;padding-bottom:15px}
+.box:first-child{flex-basis:calc(50% - 10px)}
+.box:nth-child(2){flex-basis:calc(50% - 10px)}
+.box:nth-child(3){flex-basis:calc(50% - 10px)}
+.box:nth-child(4){flex-basis:calc(50% - 10px)}
+.box .label{text-transform:uppercase;font-size:12px;border-bottom:1px solid #3c424d;padding:10px 0;font-weight:400}
+.box .label span{margin-left:5px;border:1px solid #3a414f;font-size:10px;padding:0 5px;color:#999;letter-spacing:1px}
+.box .digits{text-transform:uppercase;font-size:30px;font-weight:300;padding:10px 0 0}
+.box .digits div{display:inline}
+.box .digits span{margin-left:5px;font-weight:100}
+.box .label-footer{text-transform:uppercase;background:#333;border:2px solid #adbcdb;color:#adbcdb;padding:3px 10px;border-radius:50px;font-size:11px;margin-right:3px;display:inline;margin-bottom:10px}
+.box.a .digits{color:#edd750}
+.box.a .label-footer{color:#ac9d43;border-color:#8d802e}
+.box.a .label{color:#edd750;border-color:#edd750}
+.box.a .label span{color:#edd750;border-color:#edd750}
+.box.b .digits{color:#237ad8}
+.box.b .label-footer{color:#4379b1;border-color:#20548a}
+.box.b .label{color:#237ad8;border-color:#237ad8}
+.box.b .label span{color:#237ad8;border-color:#237ad8}
+.box.c .digits{color:#cc5028}
+.box.c .label-footer{color:#a15337;border-color:#7d3c25}
+.box.c .label{color:#cc5028;border-color:#cc5028}
+.box.c .label span{color:#cc5028;border-color:#cc5028}
+@media (max-width: 736px) {
+.box{flex-basis:calc(50% - 10px)}
+.box:first-child{flex-grow:1}
+}
+*{box-sizing:border-box}
+.rangeselector{margin-top:-1px}
+.rangeselector input{color:#adbac7;background-color:transparent;border:1px solid #444c56}
+.rangeselector .input-group-prepend .input-group-text{background:#444c56;color:#adbac7;border:1px solid #444c56}
+.action-buttons{margin-right:15px}
+.action-buttons a{background:#7d3c25;border:2px solid #ec5d2f;color:#fff;padding:5px 10px;border-radius:50px;font-size:10px;margin-right:3px}
+.action-buttons a:last-child{margin-right:0}
+.action-buttons a.period{background:#392c4c;border-color:#6b4e95;color:#bba3de}
+.action-buttons a.custom{background:#766c32;border-color:#edd750}
+.action-buttons a:hover{background:#0000006b;border:2px solid #ffffff6b;text-decoration:none;transition:background-color .5s ease-out}
 /* ==========================================================================
     2. TYPOGRAPHY
 ============================================================================= */

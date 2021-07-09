@@ -121,6 +121,7 @@
                     </li>
                     <li><a href="{{route('gioithieu')}}">Giới thiệu</a></li>
                     <li><a href="{{route('lienhe')}}">Liên hệ</a></li>
+                    <li><a href="{{route('thongke')}}">Thống kê</a></li>
                 </ul>
                 <div class="clearfix"></div>
             </nav>

@@ -48,6 +48,10 @@ Route::get('index', [
                 'as' => 'lienhe',
                 'uses' => 'PageController@getLienHe'
                 ]);
+                Route::get('thong-ke', [
+                    'as' => 'thongke',
+                    'uses' => 'PageController@getThongKe'
+                    ]);
                 //Thêm vào giỏ hàng
                 Route::get('add-to-cart/{id}', [
                     'as' => 'themgiohang',

@@ -59,10 +59,37 @@ class PageController extends Controller
     public function getLienHe(){
         return view('page.lienhe');
     }
+    public function getThongKe(){
+        //sale in a month
+        $range = \Carbon\Carbon::now()->subDays(30);
+        $month = DB::table('bills')->where('created_at', '>=', $range)->sum('total');
+        $monthavg = DB::table('bills')->where('created_at', '>=', $range)->avg('total');
+        $monthorder = Bill::select(['bills.*'])->where('created_at', '>=', $range)->count();
+        //Sale in 1 week
+         $rangeweek = \Carbon\Carbon::now()->subDays(7);
+         $week = DB::table('bills')->where('created_at', '>=', $rangeweek)->sum('total');
+         $weekavg = DB::table('bills')->where('created_at', '>=', $rangeweek)->avg('total');
+         $weekorder = Bill::select(['bills.*'])->where('created_at', '>=', $rangeweek)->count();
+         //Sale in 1 day
+         $rangeday = \Carbon\Carbon::now()->subDays(1);
+         $day = DB::table('bills')->where('created_at', '>=', $rangeday)->sum('total');
+         $dayavg = DB::table('bills')->where('created_at', '>=', $rangeday)->avg('total');
+         $dayorder = Bill::select(['bills.*'])->where('created_at', '>=', $rangeday)->count();
+        //Thống kê user
+        $users = User::select(['users.*'])
+                    ->count();
+        //Thống kê tổng doanh thu
+        $doanhthutong = DB::table("bills")->get()->sum("total");
+        $tongbill = Bill::select(['bills.*'])
+                    ->count();
+        $doanhthuTB = DB::table('bills')->avg('total');
+        //Thống kê số lượng sản phẩm
+        $products = Product::select(['products.*'])
+        ->count();
+        return view('page.thongke',compact('users','doanhthutong','tongbill','doanhthuTB','month','monthavg','monthorder','week','weekavg','weekorder','day','dayavg','dayorder','products'));
+    }
     public function getAddToWishList(Request $req){
-        // if(array_key_exists($id, $this->items)){
-        //     $giohang = $this->items[$id];
-        // }
+
         $user_id='';
             if(Auth::check()){
                 $user_id = Auth::user()->id;
@@ -81,9 +108,20 @@ class PageController extends Controller
             }
     }
     public function getDelItemWishlist($id){
-        $wishlist = Wishlist::find($id);
+        $user_id = null;
+        if (Auth::user()->id){
+            $user_id = Auth::user()->id;
+        }
+        // dd($user_id);
+        $wishlist =Wishlist::where('product_id',$id)->where('user_id',$user_id)->first();
+
+    if ($wishlist != null) {
         $wishlist->delete();
         return redirect()->back()->with('thanhcong','Sản phẩm yêu thích đã được xóa');
+    }
+
+    return redirect()->back()->with('thanhcong','Wrong ID');
+
     }
     public function getAddtoCart(Request $req, $id){
         $product = Product::find($id);
@@ -110,7 +148,7 @@ class PageController extends Controller
     public function getCheckout(){
         if(Session::get('cart')){
         $cart = Session::get('cart');
-    //    dd($cart);
+
        $product_cart = $cart->items;
        $totalPrice = $cart->totalPrice;
        $totalQty = $cart->totalQty;
